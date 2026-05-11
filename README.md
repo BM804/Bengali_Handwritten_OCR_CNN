@@ -10,6 +10,13 @@ This project builds and trains a CNN model to classify handwritten Bangla charac
 
 ---
 
+## 📥 Download Trained Model
+
+[![Download Model](https://img.shields.io/badge/⬇️_Download-Model_v1.0-blue?style=for-the-badge)](https://github.com/BM804/Bengali_Handwritten_OCR_CNN/releases/download/v1.0/final_bangla_cnn_model.keras)
+[![Release](https://img.shields.io/github/v/release/BM804/Bengali_Handwritten_OCR_CNN?style=for-the-badge&color=green)](https://github.com/BM804/Bengali_Handwritten_OCR_CNN/releases/tag/v1.0)
+
+---
+
 ## 💻 Project in VS Code
 
 ![VS Code](https://raw.githubusercontent.com/BM804/Bengali_Handwritten_OCR_CNN/main/assets/vscode.png)
@@ -21,24 +28,13 @@ This project builds and trains a CNN model to classify handwritten Bangla charac
 ```
 Bengali_Handwritten_OCR_CNN/
 │
-├── model/
-│   └── final_bangla_cnn_model.keras     # Trained CNN model
-│
-├── test_images/                          # Sample test images
-│   ├── 01_0001_0_11_0916_1913_63.png
-│   └── ...
-│
 ├── assets/                               # Images for README
-│   ├── accuracy.png
-│   ├── loss.png
-│   ├── confusion_matrix.png
-│   ├── dataset.png
-│   ├── prediction_output.png
-│   └── vscode.png
-│
+├── test_images/                          # Sample test images
 ├── predict.py                            # Inference script
 └── README.md
 ```
+
+> 💡 The trained model is available via [GitHub Releases](https://github.com/BM804/Bengali_Handwritten_OCR_CNN/releases/tag/v1.0) — not stored in the repo.
 
 ---
 
@@ -154,11 +150,39 @@ pip install tensorflow numpy pandas matplotlib pillow
 
 ## 🚀 Usage
 
+### Step 1 — Download the model
+```bash
+# From GitHub Releases
+wget https://github.com/BM804/Bengali_Handwritten_OCR_CNN/releases/download/v1.0/final_bangla_cnn_model.keras
+```
+
+### Step 2 — Run prediction
 ```bash
 python predict.py
 ```
 
 Place test images in `test_images/` folder. The script loads the model, preprocesses each image, and displays predictions in a grid.
+
+### Step 3 — Use in your own code
+```python
+import tensorflow as tf
+import numpy as np
+from PIL import Image
+
+# Load model
+model = tf.keras.models.load_model("final_bangla_cnn_model.keras")
+
+# Preprocess image
+img = Image.open("your_image.png").convert("L").resize((32, 32))
+img_array = np.array(img) / 255.0
+img_array = img_array.reshape(1, 32, 32, 1)
+
+# Predict
+prediction = model.predict(img_array)
+predicted_class = np.argmax(prediction)
+confidence = np.max(prediction) * 100
+print(f"Class: {predicted_class}, Confidence: {confidence:.2f}%")
+```
 
 ---
 
@@ -169,18 +193,29 @@ Place test images in `test_images/` folder. The script loads the model, preproce
 | Test Accuracy | ~90% |
 | Validation Accuracy | ~95% |
 | Number of Classes | 84 |
+| Top-5 Accuracy | High |
 
 ---
 
 ## 🛠️ Tech Stack
 
-`Python` · `TensorFlow/Keras` · `NumPy` · `Matplotlib` · `Pillow`
+![Python](https://img.shields.io/badge/Python-3.x-blue?style=flat-square&logo=python)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange?style=flat-square&logo=tensorflow)
+![Keras](https://img.shields.io/badge/Keras-red?style=flat-square&logo=keras)
+![NumPy](https://img.shields.io/badge/NumPy-blue?style=flat-square&logo=numpy)
+![Kaggle](https://img.shields.io/badge/Trained_on-Kaggle-20BEFF?style=flat-square&logo=kaggle)
 
 ---
 
 ## 👤 Author
 
 **BM804** — [@BM804](https://github.com/BM804)
+
+---
+
+## 📄 License
+
+This project is open-source. Feel free to use, modify, and distribute with attribution.
 
 ---
 
